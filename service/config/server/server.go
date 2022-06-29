@@ -18,9 +18,9 @@ var (
 	// Flags specific to the config service
 	Flags = []cli.Flag{
 		&cli.StringFlag{
-			Name:    "watch_topic",
+			Name:    "config_secret_key",
 			EnvVars: []string{"MICRO_CONFIG_SECRET_KEY"},
-			Usage:   "watch the change event.",
+			Usage:   "set config secret key",
 		},
 	}
 )
@@ -36,8 +36,6 @@ func Run(c *cli.Context) error {
 
 	// register the handler
 	pb.RegisterConfigHandler(srv.Server(), handler.NewConfig(c.String("config_secret_key")))
-	// register the subscriber
-	//srv.Subscribe(watchTopic, new(watcher))
 
 	if err := srv.Run(); err != nil {
 		logger.Fatal(err)
